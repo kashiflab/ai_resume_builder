@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:dartz/dartz.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import '../../../../core/error/failures.dart';
@@ -79,7 +81,7 @@ class SupabaseAuthRepository extends BaseRepository implements AuthRepository {
             .select()
             .eq('id', response.user!.id);
 
-        return UserModel.fromJson(userResponse as Map<String, dynamic>);
+        return UserModel.fromJson(jsonDecode(jsonEncode(userResponse))[0]);
       },
     );
   }

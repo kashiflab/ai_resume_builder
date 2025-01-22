@@ -7,6 +7,7 @@ import '../bloc/auth_bloc.dart';
 import '../styles/auth_styles.dart';
 import '../widgets/social_sign_in_button.dart';
 import 'sign_in_screen.dart';
+import 'package:go_router/go_router.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});
@@ -61,19 +62,17 @@ class _SignUpScreenState extends State<SignUpScreen> {
     showDialog(
       context: context,
       barrierDismissible: false,
-      builder: (context) => SuccessDialog(
-        title: 'Verify Your Email',
-        message:
-            'We have sent a verification link to your email address. Please verify your email to continue.',
-        buttonText: 'Go to Sign In',
-        onPressed: () {
-          Navigator.of(context).pushAndRemoveUntil(
-            MaterialPageRoute(
-              builder: (context) => const SignInScreen(),
-            ),
-            (route) => false,
-          );
-        },
+      builder: (context) => PopScope(
+        canPop: false,
+        child: SuccessDialog(
+          title: 'Verify Your Email',
+          message:
+              'We have sent a verification link to your email address. Please verify your email to continue.',
+          buttonText: 'Go to Sign In',
+          onPressed: () {
+            context.go('/auth/signin');
+          },
+        ),
       ),
     );
   }
@@ -279,11 +278,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       ),
                       TextButton(
                         onPressed: () {
-                          Navigator.of(context).pushReplacement(
-                            MaterialPageRoute(
-                              builder: (_) => const SignInScreen(),
-                            ),
-                          );
+                          context.go('/auth/signin');
                         },
                         child: const Text('Sign In'),
                       ),

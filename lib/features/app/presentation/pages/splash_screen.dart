@@ -104,7 +104,7 @@ class _SplashScreenState extends State<SplashScreen>
                     Text(
                       'Create Professional Resumes with AI',
                       style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                            color: AppTheme.textSecondaryColor,
+                            color: AppTheme.secondaryColor,
                           ),
                     ),
                   ],

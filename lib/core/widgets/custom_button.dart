@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import '../theme/app_theme.dart';
 
 /// Custom button widget with loading state support
 class CustomButton extends StatelessWidget {
@@ -26,8 +25,8 @@ class CustomButton extends StatelessWidget {
     this.textColor,
     this.width,
     this.height = 48,
-    this.borderRadius = 8,
-    this.padding = const EdgeInsets.symmetric(horizontal: 16),
+    this.borderRadius = 12,
+    this.padding = const EdgeInsets.symmetric(horizontal: 24),
     this.prefix,
     this.suffix,
   });
@@ -35,6 +34,7 @@ class CustomButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
 
     return SizedBox(
       width: width,
@@ -44,31 +44,34 @@ class CustomButton extends StatelessWidget {
               onPressed: isLoading ? null : onPressed,
               style: OutlinedButton.styleFrom(
                 side: BorderSide(
-                  color: backgroundColor ?? AppTheme.primaryColor,
+                  color: backgroundColor ?? colorScheme.primary,
+                  width: 1.5,
                 ),
+                foregroundColor: backgroundColor ?? colorScheme.primary,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(borderRadius),
                 ),
                 padding: padding,
               ),
-              child: _buildChild(theme),
+              child: _buildChild(theme, colorScheme),
             )
           : ElevatedButton(
               onPressed: isLoading ? null : onPressed,
               style: ElevatedButton.styleFrom(
-                backgroundColor: backgroundColor ?? AppTheme.primaryColor,
-                foregroundColor: textColor ?? AppTheme.textLightColor,
+                backgroundColor: backgroundColor ?? colorScheme.primary,
+                foregroundColor: textColor ?? colorScheme.onPrimary,
+                elevation: 0,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(borderRadius),
                 ),
                 padding: padding,
               ),
-              child: _buildChild(theme),
+              child: _buildChild(theme, colorScheme),
             ),
     );
   }
 
-  Widget _buildChild(ThemeData theme) {
+  Widget _buildChild(ThemeData theme, ColorScheme colorScheme) {
     if (isLoading) {
       return SizedBox(
         height: 20,
@@ -76,7 +79,7 @@ class CustomButton extends StatelessWidget {
         child: CircularProgressIndicator(
           strokeWidth: 2,
           valueColor: AlwaysStoppedAnimation<Color>(
-            isOutlined ? AppTheme.primaryColor : AppTheme.textLightColor,
+            isOutlined ? colorScheme.primary : colorScheme.onPrimary,
           ),
         ),
       );
@@ -93,8 +96,8 @@ class CustomButton extends StatelessWidget {
           text,
           style: theme.textTheme.bodyLarge?.copyWith(
             color: isOutlined
-                ? (textColor ?? AppTheme.primaryColor)
-                : (textColor ?? AppTheme.textLightColor),
+                ? (textColor ?? colorScheme.primary)
+                : (textColor ?? colorScheme.onPrimary),
             fontWeight: FontWeight.w600,
           ),
         ),
