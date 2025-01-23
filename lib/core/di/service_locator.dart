@@ -2,11 +2,14 @@ import 'package:get_it/get_it.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import '../config/env_config.dart';
 import '../network/network_info.dart';
-import '../../features/auth/data/repositories/supabase_auth_repository.dart';
 import '../../features/auth/domain/repositories/auth_repository.dart';
+import '../../features/auth/data/repositories/supabase_auth_repository.dart';
 import '../../features/auth/presentation/bloc/auth_bloc.dart';
+import '../../features/auth/presentation/bloc/login/login_bloc.dart';
+import '../../features/auth/presentation/bloc/signup/signup_bloc.dart';
+import '../../features/auth/presentation/bloc/forgot_password/forgot_password_bloc.dart';
 
-final GetIt sl = GetIt.instance;
+final sl = GetIt.instance;
 
 /// Initialize all dependencies
 Future<void> setupServiceLocator() async {
@@ -29,12 +32,23 @@ Future<void> setupServiceLocator() async {
 
 /// Setup dependencies for Auth feature
 Future<void> _setupAuthFeature() async {
-  // BLoCs
-  sl.registerFactory(() => AuthBloc(sl()));
-
   // Repositories
   sl.registerLazySingleton<AuthRepository>(
     () => SupabaseAuthRepository(sl()),
+  );
+
+  // BLoCs
+  sl.registerFactory(
+    () => AuthBloc(sl()),
+  );
+  sl.registerFactory(
+    () => LoginBloc(authRepository: sl()),
+  );
+  sl.registerFactory(
+    () => SignUpBloc(authRepository: sl()),
+  );
+  sl.registerFactory(
+    () => ForgotPasswordBloc(authRepository: sl()),
   );
 }
 

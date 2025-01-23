@@ -6,6 +6,9 @@ import 'core/di/service_locator.dart';
 import 'core/router/app_router.dart';
 import 'core/theme/app_theme.dart';
 import 'features/auth/presentation/bloc/auth_bloc.dart';
+import 'features/auth/presentation/bloc/login/login_bloc.dart';
+import 'features/auth/presentation/bloc/signup/signup_bloc.dart';
+import 'features/auth/presentation/bloc/forgot_password/forgot_password_bloc.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -36,25 +39,37 @@ class MyApp extends StatelessWidget {
           create: (context) =>
               sl<AuthBloc>()..add(const CheckAuthStatusEvent()),
         ),
+        BlocProvider<LoginBloc>(
+          create: (context) => sl<LoginBloc>(),
+        ),
+        BlocProvider<SignUpBloc>(
+          create: (context) => sl<SignUpBloc>(),
+        ),
+        BlocProvider<ForgotPasswordBloc>(
+          create: (context) => sl<ForgotPasswordBloc>(),
+        ),
       ],
       child: MaterialApp.router(
         title: 'AI Resume Builder',
         debugShowCheckedModeBanner: false,
         theme: AppTheme.lightTheme,
         darkTheme: AppTheme.darkTheme,
-        themeMode: ThemeMode.light,
+        themeMode: ThemeMode.system,
         routerConfig: goRouter,
         builder: (context, child) {
           // Update system UI overlay style based on theme
-          // final isDark = Theme.of(context).brightness == Brightness.dark;
+          final isDark = Theme.of(context).brightness == Brightness.dark;
           SystemChrome.setSystemUIOverlayStyle(
             SystemUiOverlayStyle(
               statusBarColor: Colors.transparent,
-              statusBarIconBrightness: Brightness.dark,
-              statusBarBrightness: Brightness.light,
-              systemNavigationBarColor:
-                  AppTheme.lightTheme.scaffoldBackgroundColor,
-              systemNavigationBarIconBrightness: Brightness.dark,
+              statusBarIconBrightness:
+                  isDark ? Brightness.light : Brightness.dark,
+              statusBarBrightness: isDark ? Brightness.dark : Brightness.light,
+              systemNavigationBarColor: isDark
+                  ? AppTheme.darkTheme.scaffoldBackgroundColor
+                  : AppTheme.lightTheme.scaffoldBackgroundColor,
+              systemNavigationBarIconBrightness:
+                  isDark ? Brightness.light : Brightness.dark,
             ),
           );
           return child!;

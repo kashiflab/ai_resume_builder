@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import '../../features/auth/presentation/pages/sign_in_screen.dart';
 import '../../features/auth/presentation/pages/sign_up_screen.dart';
+import '../../features/auth/presentation/pages/forgot_password_screen.dart';
 import '../../features/dashboard/presentation/pages/dashboard_screen.dart';
 import '../../features/settings/presentation/pages/settings_screen.dart';
 import '../../features/settings/presentation/pages/profile_settings_screen.dart';
@@ -30,6 +31,10 @@ final goRouter = GoRouter(
         GoRoute(
           path: 'signup',
           builder: (context, state) => const SignUpScreen(),
+        ),
+        GoRoute(
+          path: 'forgot-password',
+          builder: (context, state) => const ForgotPasswordScreen(),
         ),
       ],
     ),

@@ -79,6 +79,8 @@ class _SplashScreenState extends State<SplashScreen>
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
     return Scaffold(
       body: Container(
         decoration: BoxDecoration(
@@ -86,9 +88,11 @@ class _SplashScreenState extends State<SplashScreen>
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
             colors: [
-              Theme.of(context).primaryColor,
-              Theme.of(context).primaryColor.withOpacity(0.8),
+              theme.colorScheme.primary,
+              theme.colorScheme.secondary,
+              theme.colorScheme.tertiary,
             ],
+            stops: const [0.0, 0.5, 1.0],
           ),
         ),
         child: Center(
@@ -112,21 +116,54 @@ class _SplashScreenState extends State<SplashScreen>
                           borderRadius: BorderRadius.circular(30),
                           boxShadow: [
                             BoxShadow(
-                              color: Colors.black.withOpacity(0.1),
-                              blurRadius: 20,
+                              color: Colors.black.withOpacity(0.2),
+                              blurRadius: 30,
                               offset: const Offset(0, 10),
                             ),
                           ],
                         ),
-                        child: Image.asset(
-                          'assets/images/logo.png',
-                          errorBuilder: (context, error, stackTrace) {
-                            return Icon(
-                              Icons.description,
-                              size: 60,
-                              color: Theme.of(context).primaryColor,
-                            );
-                          },
+                        child: Stack(
+                          children: [
+                            // Main document icon
+                            ShaderMask(
+                              shaderCallback: (bounds) => LinearGradient(
+                                colors: [
+                                  theme.colorScheme.primary,
+                                  theme.colorScheme.secondary,
+                                ],
+                              ).createShader(bounds),
+                              child: const Icon(
+                                Icons.description,
+                                size: 60,
+                                color: Colors.white,
+                              ),
+                            ),
+                            // AI sparkle effect
+                            Positioned(
+                              right: 0,
+                              top: 0,
+                              child: Container(
+                                padding: const EdgeInsets.all(8),
+                                decoration: BoxDecoration(
+                                  color: theme.colorScheme.tertiary,
+                                  shape: BoxShape.circle,
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: theme.colorScheme.tertiary
+                                          .withOpacity(0.3),
+                                      blurRadius: 8,
+                                      spreadRadius: 2,
+                                    ),
+                                  ],
+                                ),
+                                child: const Icon(
+                                  Icons.auto_awesome,
+                                  size: 14,
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                       const SizedBox(height: 24),
@@ -149,14 +186,21 @@ class _SplashScreenState extends State<SplashScreen>
                       ),
                       const SizedBox(height: 48),
                       // Loading Indicator
-                      SizedBox(
-                        width: 48,
-                        height: 48,
-                        child: CircularProgressIndicator(
-                          valueColor: AlwaysStoppedAnimation<Color>(
-                            Colors.white.withOpacity(0.9),
+                      Container(
+                        padding: const EdgeInsets.all(16),
+                        decoration: BoxDecoration(
+                          color: Colors.white.withOpacity(0.15),
+                          borderRadius: BorderRadius.circular(16),
+                        ),
+                        child: SizedBox(
+                          width: 24,
+                          height: 24,
+                          child: CircularProgressIndicator(
+                            strokeWidth: 2,
+                            valueColor: AlwaysStoppedAnimation<Color>(
+                              Colors.white.withOpacity(0.9),
+                            ),
                           ),
-                          strokeWidth: 3,
                         ),
                       ),
                     ],
