@@ -177,11 +177,13 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         isLoading: false,
         errorMessage: failure.message,
       )),
-      (_) => emit(state.copyWith(
+      (_) => emit(const AuthState(
         isLoading: false,
         isAuthenticated: false,
         user: null,
         errorMessage: null,
+        signUpSuccess: false,
+        isInitialState: false,
       )),
     );
   }

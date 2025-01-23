@@ -1,3 +1,4 @@
+import 'package:ai_resume_builder/core/constants/app_routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -21,13 +22,13 @@ class SettingsScreen extends StatelessWidget {
             icon: Icons.person_outline,
             title: 'Profile Settings',
             subtitle: 'Update your personal information',
-            onTap: () => context.push('/settings/profile'),
+            onTap: () => context.push(AppRoute.settingsProfile.path),
           ),
           _SettingsTile(
             icon: Icons.lock_outline,
             title: 'Change Password',
             subtitle: 'Update your password',
-            onTap: () => context.push('/settings/change-password'),
+            onTap: () => context.push(AppRoute.settingsChangePassword.path),
           ),
 
           const SizedBox(height: 24),
@@ -54,7 +55,7 @@ class SettingsScreen extends StatelessWidget {
             icon: Icons.workspace_premium_outlined,
             title: 'Premium Features',
             subtitle: 'Upgrade to access premium features',
-            onTap: () => context.push('/settings/subscription'),
+            onTap: () => context.push(AppRoute.settingsSubscription.path),
           ),
 
           const SizedBox(height: 24),
@@ -65,13 +66,13 @@ class SettingsScreen extends StatelessWidget {
             icon: Icons.description_outlined,
             title: 'Default Resume Template',
             subtitle: 'Set your preferred template',
-            onTap: () => context.push('/settings/template'),
+            onTap: () => context.push(AppRoute.settingsTemplate.path),
           ),
           _SettingsTile(
             icon: Icons.format_size_outlined,
             title: 'Font Settings',
             subtitle: 'Customize resume fonts',
-            onTap: () => context.push('/settings/fonts'),
+            onTap: () => context.push(AppRoute.settingsFonts.path),
           ),
 
           const SizedBox(height: 24),
@@ -82,7 +83,7 @@ class SettingsScreen extends StatelessWidget {
             icon: Icons.picture_as_pdf_outlined,
             title: 'PDF Quality',
             subtitle: 'Configure export quality',
-            onTap: () => context.push('/settings/export'),
+            onTap: () => context.push(AppRoute.settingsExport.path),
           ),
 
           const SizedBox(height: 24),
@@ -93,19 +94,19 @@ class SettingsScreen extends StatelessWidget {
             icon: Icons.backup_outlined,
             title: 'Backup & Sync',
             subtitle: 'Manage your data',
-            onTap: () => context.push('/settings/backup'),
+            onTap: () => context.push(AppRoute.settingsBackup.path),
           ),
           _SettingsTile(
             icon: Icons.language_outlined,
             title: 'Language',
             subtitle: 'Change app language',
-            onTap: () => context.push('/settings/language'),
+            onTap: () => context.push(AppRoute.settingsLanguage.path),
           ),
           _SettingsTile(
             icon: Icons.notifications_outlined,
             title: 'Notifications',
             subtitle: 'Manage notifications',
-            onTap: () => context.push('/settings/notifications'),
+            onTap: () => context.push(AppRoute.settingsNotifications.path),
           ),
 
           const SizedBox(height: 24),
@@ -116,13 +117,13 @@ class SettingsScreen extends StatelessWidget {
             icon: Icons.info_outline,
             title: 'About App',
             subtitle: 'Version, terms, and privacy policy',
-            onTap: () => context.push('/settings/about'),
+            onTap: () => context.push(AppRoute.about.path),
           ),
           _SettingsTile(
             icon: Icons.help_outline,
             title: 'Help & Support',
             subtitle: 'Get help and contact support',
-            onTap: () => context.push('/settings/help'),
+            onTap: () => context.push(AppRoute.help.path),
           ),
 
           const SizedBox(height: 24),
@@ -136,7 +137,7 @@ class SettingsScreen extends StatelessWidget {
             titleColor: Colors.red,
             onTap: () {
               // TODO: Implement sign out logic
-              context.go('/auth/signin');
+              context.go(AppRoute.signIn.path);
             },
           ),
           _SettingsTile(

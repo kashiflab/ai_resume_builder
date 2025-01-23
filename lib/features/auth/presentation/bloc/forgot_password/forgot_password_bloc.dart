@@ -21,7 +21,7 @@ class ForgotPasswordBloc
   ) async {
     try {
       emit(state.copyWith(isLoading: true, errorMessage: null));
-      await _authRepository.sendPasswordResetEmail(email: event.email);
+      await _authRepository.resetPassword(email: event.email);
       emit(state.copyWith(isLoading: false, isSuccess: true));
     } catch (e) {
       emit(state.copyWith(

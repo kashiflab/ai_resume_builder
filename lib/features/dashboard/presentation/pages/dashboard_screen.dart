@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:feather_icons/feather_icons.dart';
-import '../../../../core/theme/app_theme.dart';
+import 'package:go_router/go_router.dart';
+import '../../../../core/constants/app_routes.dart';
 import '../../../auth/presentation/bloc/auth_bloc.dart';
 import '../../../auth/presentation/pages/profile_screen.dart';
+import '../widgets/dashboard_drawer.dart';
+import '../widgets/dashboard_bottom_nav.dart';
+import '../widgets/dashboard_fab.dart';
 import 'home/home_screen.dart';
 import 'templates/templates_screen.dart';
 import 'saved/saved_screen.dart';
@@ -27,175 +30,47 @@ class _DashboardScreenState extends State<DashboardScreen> {
     const ProfileScreen(),
   ];
 
+  void _handleFabPressed() {
+    // TODO: Handle create new resume
+  }
+
   @override
   Widget build(BuildContext context) {
-    final user = context.read<AuthBloc>().state.user;
-
-    return Scaffold(
-      drawer: _buildDrawer(user?.fullName ?? 'Guest', user?.email),
-      appBar: AppBar(
-        title: const Text('AI Resume Builder'),
-        actions: [
-          IconButton(
-            icon: const Icon(Iconsax.notification),
-            onPressed: () {
-              // TODO: Handle notifications
-            },
-          ),
-        ],
-      ),
-      body: IndexedStack(
-        index: _currentIndex,
-        children: _screens,
-      ),
-      floatingActionButton: Container(
-        height: 64,
-        width: 64,
-        margin: const EdgeInsets.only(top: 32),
-        child: FloatingActionButton(
-          backgroundColor: AppTheme.primaryColor,
-          child: const Icon(
-            Iconsax.add,
-            size: 32,
-            color: Colors.white,
-          ),
-          onPressed: () {
-            // TODO: Handle create new resume
-          },
+    return BlocListener<AuthBloc, AuthState>(
+      listenWhen: (previous, current) =>
+          previous.isAuthenticated != current.isAuthenticated,
+      listener: (context, state) {
+        if (!state.isAuthenticated) {
+          context.go(AppRoute.signIn.path);
+        }
+      },
+      child: Scaffold(
+        drawer: DashboardDrawer(
+          name: context.read<AuthBloc>().state.user?.fullName ?? 'Guest',
+          email: context.read<AuthBloc>().state.user?.email,
         ),
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      bottomNavigationBar: _buildBottomNavigationBar(),
-    );
-  }
-
-  Widget _buildDrawer(String name, String? email) {
-    return Drawer(
-      child: ListView(
-        padding: EdgeInsets.zero,
-        children: [
-          UserAccountsDrawerHeader(
-            decoration: const BoxDecoration(color: AppTheme.primaryColor),
-            accountName: Text(
-              name,
-              style: const TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 18,
-              ),
+        appBar: AppBar(
+          title: const Text('AI Resume Builder'),
+          actions: [
+            IconButton(
+              icon: const Icon(Iconsax.notification),
+              onPressed: () {
+                // TODO: Handle notifications
+              },
             ),
-            accountEmail: email != null
-                ? Text(
-                    email,
-                    style: const TextStyle(
-                      fontSize: 14,
-                    ),
-                  )
-                : null,
-            currentAccountPicture: CircleAvatar(
-              backgroundColor: Colors.white,
-              child: Text(
-                name[0].toUpperCase(),
-                style: const TextStyle(
-                  fontSize: 32,
-                  fontWeight: FontWeight.bold,
-                  color: AppTheme.primaryColor,
-                ),
-              ),
-            ),
-          ),
-          ListTile(
-            leading: const Icon(FeatherIcons.settings),
-            title: const Text('Settings'),
-            onTap: () {
-              // TODO: Navigate to settings
-            },
-          ),
-          ListTile(
-            leading: const Icon(FeatherIcons.helpCircle),
-            title: const Text('Help & Support'),
-            onTap: () {
-              // TODO: Navigate to help
-            },
-          ),
-          ListTile(
-            leading: const Icon(FeatherIcons.info),
-            title: const Text('About'),
-            onTap: () {
-              // TODO: Navigate to about
-            },
-          ),
-          const Divider(),
-          ListTile(
-            leading: const Icon(FeatherIcons.logOut),
-            title: const Text('Sign Out'),
-            onTap: () {
-              context.read<AuthBloc>().add(const SignOutEvent());
-            },
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildBottomNavigationBar() {
-    return Container(
-      decoration: BoxDecoration(
-        color: Colors.white,
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey.withOpacity(0.2),
-            blurRadius: 10,
-            offset: const Offset(0, -5),
-          ),
-        ],
-      ),
-      child: BottomAppBar(
-        height: 60,
-        notchMargin: 8,
-        shape: const AutomaticNotchedShape(
-          RoundedRectangleBorder(),
-          RoundedRectangleBorder(
-            borderRadius: BorderRadius.all(Radius.circular(16)),
-          ),
-        ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            _buildNavItem(0, Iconsax.home, 'Home'),
-            _buildNavItem(1, Iconsax.document, 'Templates'),
-            const SizedBox(width: 40), // Space for FAB
-            _buildNavItem(3, Iconsax.save_2, 'Saved'),
-            _buildNavItem(4, Iconsax.profile_circle, 'Profile'),
           ],
         ),
-      ),
-    );
-  }
-
-  Widget _buildNavItem(int index, IconData icon, String label) {
-    final isSelected = _currentIndex == index;
-    return InkWell(
-      onTap: () => setState(() => _currentIndex = index),
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Icon(
-              icon,
-              color: isSelected ? AppTheme.primaryColor : Colors.grey,
-              size: 24,
-            ),
-            const SizedBox(height: 4),
-            Text(
-              label,
-              style: TextStyle(
-                color: isSelected ? AppTheme.primaryColor : Colors.grey,
-                fontSize: 12,
-                fontWeight: isSelected ? FontWeight.w600 : FontWeight.normal,
-              ),
-            ),
-          ],
+        body: IndexedStack(
+          index: _currentIndex,
+          children: _screens,
+        ),
+        floatingActionButton: DashboardFab(
+          onPressed: _handleFabPressed,
+        ),
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+        bottomNavigationBar: DashboardBottomNav(
+          currentIndex: _currentIndex,
+          onTap: (index) => setState(() => _currentIndex = index),
         ),
       ),
     );

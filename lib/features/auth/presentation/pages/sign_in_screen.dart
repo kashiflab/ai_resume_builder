@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import '../../../../core/constants/app_routes.dart';
 import '../../../../core/theme/app_theme.dart';
 import '../../../../core/widgets/custom_button.dart';
 import '../bloc/auth_bloc.dart';
@@ -48,16 +49,21 @@ class _SignInScreenState extends State<SignInScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: BlocBuilder<AuthBloc, AuthState>(
-        builder: (context, state) {
-          if (state.errorMessage != null) {
-            WidgetsBinding.instance.addPostFrameCallback((_) {
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text(state.errorMessage!)),
-              );
-            });
+      body: BlocConsumer<AuthBloc, AuthState>(
+        listenWhen: (previous, current) =>
+            previous.isAuthenticated != current.isAuthenticated ||
+            previous.errorMessage != current.errorMessage,
+        listener: (context, state) {
+          if (state.isAuthenticated) {
+            context.go(AppRoute.dashboard.path);
           }
-
+          if (state.errorMessage != null) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(content: Text(state.errorMessage!)),
+            );
+          }
+        },
+        builder: (context, state) {
           return SafeArea(
             child: SingleChildScrollView(
               padding: const EdgeInsets.symmetric(
@@ -218,7 +224,7 @@ class _SignInScreenState extends State<SignInScreen> {
                       ),
                       TextButton(
                         onPressed: () {
-                          context.go('/auth/signup');
+                          context.go(AppRoute.signUp.path);
                         },
                         child: const Text('Sign Up'),
                       ),

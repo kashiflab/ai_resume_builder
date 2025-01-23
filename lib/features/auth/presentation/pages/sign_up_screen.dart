@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
+import '../../../../core/constants/app_routes.dart';
 import '../../../../core/theme/app_theme.dart';
 import '../../../../core/widgets/custom_button.dart';
 import '../../../../core/widgets/success_dialog.dart';
@@ -7,7 +9,6 @@ import '../bloc/auth_bloc.dart';
 import '../styles/auth_styles.dart';
 import '../widgets/social_sign_in_button.dart';
 import 'sign_in_screen.dart';
-import 'package:go_router/go_router.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});
@@ -70,7 +71,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
               'We have sent a verification link to your email address. Please verify your email to continue.',
           buttonText: 'Go to Sign In',
           onPressed: () {
-            context.go('/auth/signin');
+            context.go(AppRoute.signIn.path);
           },
         ),
       ),

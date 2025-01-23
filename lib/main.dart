@@ -54,22 +54,26 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         theme: AppTheme.lightTheme,
         darkTheme: AppTheme.darkTheme,
-        themeMode: ThemeMode.system,
+        // themeMode: ThemeMode.system,
+        themeMode: ThemeMode.light,
         routerConfig: goRouter,
         builder: (context, child) {
           // Update system UI overlay style based on theme
-          final isDark = Theme.of(context).brightness == Brightness.dark;
+          // final isDark = Theme.of(context).brightness == Brightness.dark;
           SystemChrome.setSystemUIOverlayStyle(
             SystemUiOverlayStyle(
               statusBarColor: Colors.transparent,
-              statusBarIconBrightness:
-                  isDark ? Brightness.light : Brightness.dark,
-              statusBarBrightness: isDark ? Brightness.dark : Brightness.light,
-              systemNavigationBarColor: isDark
-                  ? AppTheme.darkTheme.scaffoldBackgroundColor
-                  : AppTheme.lightTheme.scaffoldBackgroundColor,
-              systemNavigationBarIconBrightness:
-                  isDark ? Brightness.light : Brightness.dark,
+              statusBarIconBrightness: Brightness
+                  .dark, // isDark ? Brightness.light : Brightness.dark,
+              statusBarBrightness: Brightness
+                  .light, // isDark ? Brightness.dark : Brightness.light,
+              systemNavigationBarColor:
+                  AppTheme.lightTheme.scaffoldBackgroundColor,
+              // isDark
+              //     ? AppTheme.darkTheme.scaffoldBackgroundColor
+              //     : AppTheme.lightTheme.scaffoldBackgroundColor,
+              systemNavigationBarIconBrightness: Brightness.light,
+              // isDark ? Brightness.light : Brightness.dark,
             ),
           );
           return child!;
