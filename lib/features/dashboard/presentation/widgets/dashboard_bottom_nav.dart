@@ -16,33 +16,32 @@ class DashboardBottomNav extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: Colors.white,
         boxShadow: [
           BoxShadow(
             color: Colors.grey.withOpacity(0.2),
+            spreadRadius: 2,
             blurRadius: 10,
-            offset: const Offset(0, -5),
+            offset: const Offset(0, -2),
           ),
         ],
       ),
       child: BottomAppBar(
-        height: 60,
-        notchMargin: 8,
-        shape: const AutomaticNotchedShape(
-          RoundedRectangleBorder(),
-          RoundedRectangleBorder(
-            borderRadius: BorderRadius.all(Radius.circular(16)),
+        height: MediaQuery.of(context).size.height * 0.085,
+        elevation: 0,
+        padding: const EdgeInsets.symmetric(horizontal: 0),
+        color: Theme.of(context).scaffoldBackgroundColor,
+        surfaceTintColor: Colors.transparent,
+        child: SafeArea(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              _buildNavItem(0, Iconsax.home, 'Home'),
+              _buildNavItem(1, Iconsax.document, 'Templates'),
+              const SizedBox(width: 40),
+              _buildNavItem(3, Iconsax.save_2, 'Saved'),
+              _buildNavItem(4, Iconsax.profile_circle, 'Profile'),
+            ],
           ),
-        ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            _buildNavItem(0, Iconsax.home, 'Home'),
-            _buildNavItem(1, Iconsax.document, 'Templates'),
-            const SizedBox(width: 40), // Space for FAB
-            _buildNavItem(3, Iconsax.save_2, 'Saved'),
-            _buildNavItem(4, Iconsax.profile_circle, 'Profile'),
-          ],
         ),
       ),
     );
@@ -50,28 +49,45 @@ class DashboardBottomNav extends StatelessWidget {
 
   Widget _buildNavItem(int index, IconData icon, String label) {
     final isSelected = currentIndex == index;
-    return InkWell(
-      onTap: () => onTap(index),
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Icon(
-              icon,
-              color: isSelected ? AppTheme.primaryColor : Colors.grey,
-              size: 24,
+    return Flexible(
+      child: Material(
+        color: Colors.transparent,
+        child: InkWell(
+          borderRadius: BorderRadius.circular(12),
+          onTap: () => onTap(index),
+          child: AnimatedContainer(
+            duration: const Duration(milliseconds: 200),
+            padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 6),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(12),
+              color: isSelected
+                  ? AppTheme.primaryColor.withOpacity(0.1)
+                  : Colors.transparent,
             ),
-            const SizedBox(height: 4),
-            Text(
-              label,
-              style: TextStyle(
-                color: isSelected ? AppTheme.primaryColor : Colors.grey,
-                fontSize: 12,
-                fontWeight: isSelected ? FontWeight.w600 : FontWeight.normal,
-              ),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Icon(
+                  icon,
+                  color:
+                      isSelected ? AppTheme.primaryColor : Colors.grey.shade600,
+                  size: 24,
+                ),
+                const SizedBox(height: 2),
+                Text(
+                  label,
+                  style: TextStyle(
+                    color: isSelected
+                        ? AppTheme.primaryColor
+                        : Colors.grey.shade600,
+                    fontSize: 12,
+                    fontWeight:
+                        isSelected ? FontWeight.w600 : FontWeight.normal,
+                  ),
+                ),
+              ],
             ),
-          ],
+          ),
         ),
       ),
     );

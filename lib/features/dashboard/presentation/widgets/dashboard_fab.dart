@@ -13,16 +13,40 @@ class DashboardFab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 64,
-      width: 64,
       margin: const EdgeInsets.only(top: 32),
       child: FloatingActionButton(
         backgroundColor: AppTheme.primaryColor,
         onPressed: onPressed,
-        child: const Icon(
-          Iconsax.add,
-          size: 32,
-          color: Colors.white,
+        elevation: 4,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(16),
+        ),
+        child: Container(
+          width: 56,
+          height: 56,
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+              colors: [
+                AppTheme.primaryColor,
+                AppTheme.primaryColor.withOpacity(0.8),
+              ],
+            ),
+            borderRadius: BorderRadius.circular(16),
+            boxShadow: [
+              BoxShadow(
+                color: AppTheme.primaryColor.withOpacity(0.3),
+                blurRadius: 12,
+                offset: const Offset(0, 4),
+              ),
+            ],
+          ),
+          child: const Icon(
+            Iconsax.add,
+            size: 28,
+            color: Colors.white,
+          ),
         ),
       ),
     );

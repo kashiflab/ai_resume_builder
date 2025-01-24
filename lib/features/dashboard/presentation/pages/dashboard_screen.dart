@@ -44,33 +44,37 @@ class _DashboardScreenState extends State<DashboardScreen> {
           context.go(AppRoute.signIn.path);
         }
       },
-      child: Scaffold(
-        drawer: DashboardDrawer(
-          name: context.read<AuthBloc>().state.user?.fullName ?? 'Guest',
-          email: context.read<AuthBloc>().state.user?.email,
-        ),
-        appBar: AppBar(
-          title: const Text('AI Resume Builder'),
-          actions: [
-            IconButton(
-              icon: const Icon(Iconsax.notification),
-              onPressed: () {
-                // TODO: Handle notifications
-              },
-            ),
-          ],
-        ),
-        body: IndexedStack(
-          index: _currentIndex,
-          children: _screens,
-        ),
-        floatingActionButton: DashboardFab(
-          onPressed: _handleFabPressed,
-        ),
-        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-        bottomNavigationBar: DashboardBottomNav(
-          currentIndex: _currentIndex,
-          onTap: (index) => setState(() => _currentIndex = index),
+      child: GestureDetector(
+        onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
+        child: Scaffold(
+          drawer: DashboardDrawer(
+            name: context.read<AuthBloc>().state.user?.fullName ?? 'Guest',
+            email: context.read<AuthBloc>().state.user?.email,
+          ),
+          appBar: AppBar(
+            title: const Text('AI Resume Builder'),
+            actions: [
+              IconButton(
+                icon: const Icon(Iconsax.notification),
+                onPressed: () {
+                  // TODO: Handle notifications
+                },
+              ),
+            ],
+          ),
+          body: IndexedStack(
+            index: _currentIndex,
+            children: _screens,
+          ),
+          floatingActionButton: DashboardFab(
+            onPressed: _handleFabPressed,
+          ),
+          floatingActionButtonLocation:
+              FloatingActionButtonLocation.centerDocked,
+          bottomNavigationBar: DashboardBottomNav(
+            currentIndex: _currentIndex,
+            onTap: (index) => setState(() => _currentIndex = index),
+          ),
         ),
       ),
     );
