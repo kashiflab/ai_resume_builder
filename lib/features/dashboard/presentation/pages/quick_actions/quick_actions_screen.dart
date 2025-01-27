@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:iconsax/iconsax.dart';
 import '../../../../../core/constants/app_routes.dart';
+import '../../widgets/notification_badge.dart';
 
 class QuickActionsScreen extends StatelessWidget {
   const QuickActionsScreen({super.key});
@@ -11,6 +12,9 @@ class QuickActionsScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Quick Actions'),
+        actions: const [
+          NotificationBadge(),
+        ],
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),

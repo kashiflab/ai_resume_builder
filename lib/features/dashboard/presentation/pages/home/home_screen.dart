@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:iconsax/iconsax.dart';
 import '../../../../../core/theme/app_theme.dart';
+import '../../widgets/notification_badge.dart';
 // import '../../../widgets/resume_card.dart';
 // import '../../../widgets/analytics_card.dart';
 // import '../../../widgets/feature_card.dart';
@@ -13,44 +14,52 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      padding: const EdgeInsets.all(16),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          // Quick Actions Section
-          _buildSectionTitle('Quick Actions'),
-          const SizedBox(height: 16),
-          _buildQuickActions(context),
-          const SizedBox(height: 24),
+    return Scaffold(
+      // appBar: AppBar(
+      //   title: const Text('Home'),
+      //   actions: const [
+      //     NotificationBadge(),
+      //   ],
+      // ),
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // Quick Actions Section
+            _buildSectionTitle('Quick Actions'),
+            const SizedBox(height: 16),
+            _buildQuickActions(context),
+            const SizedBox(height: 24),
 
-          // Resume Analytics
-          _buildSectionTitle('Your Analytics'),
-          const SizedBox(height: 16),
-          _buildAnalytics(),
-          const SizedBox(height: 24),
+            // Resume Analytics
+            _buildSectionTitle('Your Analytics'),
+            const SizedBox(height: 16),
+            _buildAnalytics(),
+            const SizedBox(height: 24),
 
-          // Recent Activity
-          _buildSectionTitle('Recent Activity'),
-          const SizedBox(height: 16),
-          _buildRecentActivity(),
-          const SizedBox(height: 24),
+            // Recent Activity
+            _buildSectionTitle('Recent Activity'),
+            const SizedBox(height: 16),
+            _buildRecentActivity(),
+            const SizedBox(height: 24),
 
-          // AI Features
-          _buildSectionTitle('AI Assistant'),
-          const SizedBox(height: 16),
-          _buildAIFeatures(),
-          const SizedBox(height: 24),
+            // AI Features
+            _buildSectionTitle('AI Assistant'),
+            const SizedBox(height: 16),
+            _buildAIFeatures(),
+            const SizedBox(height: 24),
 
-          // Tips & Resources
-          _buildSectionTitle('Tips & Resources'),
-          const SizedBox(height: 16),
-          _buildTipsAndResources(),
-          const SizedBox(height: 24),
+            // Tips & Resources
+            _buildSectionTitle('Tips & Resources'),
+            const SizedBox(height: 16),
+            _buildTipsAndResources(),
+            const SizedBox(height: 24),
 
-          // Premium Features
-          _buildPremiumFeatures(context),
-        ],
+            // Premium Features
+            _buildPremiumFeatures(context),
+          ],
+        ),
       ),
     );
   }

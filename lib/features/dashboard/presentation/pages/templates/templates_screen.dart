@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:shimmer/shimmer.dart';
+import '../../widgets/notification_badge.dart';
 
 class TemplatesScreen extends StatefulWidget {
   const TemplatesScreen({super.key});
@@ -53,6 +54,12 @@ class _TemplatesScreenState extends State<TemplatesScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      //   appBar: AppBar(
+      //     title: const Text('Templates'),
+      //     actions: const [
+      //       NotificationBadge(),
+      //     ],
+      // ),
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,

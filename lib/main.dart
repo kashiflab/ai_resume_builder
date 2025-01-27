@@ -10,6 +10,8 @@ import 'features/auth/presentation/bloc/auth_bloc.dart';
 import 'features/auth/presentation/bloc/login/login_bloc.dart';
 import 'features/auth/presentation/bloc/signup/signup_bloc.dart';
 import 'features/auth/presentation/bloc/forgot_password/forgot_password_bloc.dart';
+import 'features/dashboard/presentation/bloc/notification/notification_bloc.dart';
+import 'features/dashboard/presentation/bloc/notification/notification_event.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -51,6 +53,10 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider<ResumeCreationBloc>(
           create: (context) => sl<ResumeCreationBloc>(),
+        ),
+        BlocProvider<NotificationBloc>(
+          create: (context) =>
+              sl<NotificationBloc>()..add(LoadNotificationsEvent()),
         ),
       ],
       child: MaterialApp.router(

@@ -2,7 +2,10 @@ import 'package:ai_resume_builder/core/constants/app_routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:iconsax/iconsax.dart';
 import '../../../../core/theme/app_theme.dart';
+import '../../../auth/presentation/bloc/auth_bloc.dart';
+import '../../../dashboard/presentation/widgets/notification_badge.dart';
 
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({super.key});
@@ -10,9 +13,12 @@ class SettingsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Settings'),
-      ),
+      // appBar: AppBar(
+      //   title: const Text('Settings'),
+      //   actions: const [
+      //     NotificationBadge(),
+      //   ],
+      // ),
       body: ListView(
         padding: const EdgeInsets.all(16),
         children: [

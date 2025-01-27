@@ -1,16 +1,16 @@
-import 'package:ai_resume_builder/core/theme/app_theme.dart';
-import 'package:ai_resume_builder/features/settings/presentation/pages/settings_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:iconsax/iconsax.dart';
 import 'package:go_router/go_router.dart';
+import 'package:iconsax/iconsax.dart';
 import '../../../../core/constants/app_routes.dart';
+import '../../../../core/theme/app_theme.dart';
 import '../../../auth/presentation/bloc/auth_bloc.dart';
-import '../../../auth/presentation/pages/profile_screen.dart';
-import '../widgets/dashboard_drawer.dart';
+import '../../../settings/presentation/pages/settings_screen.dart';
 import '../widgets/dashboard_bottom_nav.dart';
 import '../widgets/dashboard_fab.dart';
+import '../widgets/notification_badge.dart';
 import 'home/home_screen.dart';
+import 'quick_actions/quick_actions_screen.dart';
 import 'templates/templates_screen.dart';
 import 'saved/saved_screen.dart';
 
@@ -37,6 +37,21 @@ class _DashboardScreenState extends State<DashboardScreen> {
     context.push(AppRoute.quickActions.path);
   }
 
+  String _getTitle(int index) {
+    if (index == 0) {
+      return 'Home';
+    } else if (index == 1) {
+      return 'Templates';
+    } else if (index == 2) {
+      return 'Quick Actions';
+    } else if (index == 3) {
+      return 'Saved';
+    } else if (index == 4) {
+      return 'Settings';
+    }
+    return '';
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocListener<AuthBloc, AuthState>(
@@ -55,42 +70,49 @@ class _DashboardScreenState extends State<DashboardScreen> {
           //   email: context.read<AuthBloc>().state.user?.email,
           // ),
           appBar: AppBar(
-            title: Row(
-              children: [
-                CircleAvatar(
-                  backgroundColor: AppTheme.primaryColor.withOpacity(0.1),
-                  radius: 16,
-                  child: Text(
-                    context
-                            .read<AuthBloc>()
-                            .state
-                            .user
-                            ?.fullName?[0]
-                            .toUpperCase() ??
-                        'AI',
-                    style: TextStyle(
-                      color: AppTheme.primaryColor,
-                      fontWeight: FontWeight.bold,
+            centerTitle: false,
+            title: _currentIndex == 0
+                ? Row(
+                    children: [
+                      CircleAvatar(
+                        backgroundColor: AppTheme.primaryColor.withOpacity(0.1),
+                        radius: 16,
+                        child: Text(
+                          context
+                                  .read<AuthBloc>()
+                                  .state
+                                  .user
+                                  ?.fullName?[0]
+                                  .toUpperCase() ??
+                              'AI',
+                          style: TextStyle(
+                            color: AppTheme.primaryColor,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                      const SizedBox(width: 8),
+                      Text(
+                        context.read<AuthBloc>().state.user?.fullName ??
+                            'Guest',
+                        style: const TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                    ],
+                  )
+                : Text(
+                    _getTitle(_currentIndex),
+                    style: const TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.w500,
+                      letterSpacing: 0.5,
+                      color: Colors.black87,
                     ),
                   ),
-                ),
-                const SizedBox(width: 8),
-                Text(
-                  context.read<AuthBloc>().state.user?.fullName ?? 'Guest',
-                  style: const TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-              ],
-            ),
             actions: [
-              IconButton(
-                icon: const Icon(Iconsax.notification),
-                onPressed: () {
-                  // TODO: Handle notifications
-                },
-              ),
+              const NotificationBadge(),
             ],
           ),
           body: IndexedStack(

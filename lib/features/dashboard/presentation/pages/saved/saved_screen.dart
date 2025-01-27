@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
+import '../../widgets/notification_badge.dart';
 
 class SavedScreen extends StatelessWidget {
   const SavedScreen({super.key});
@@ -7,6 +8,12 @@ class SavedScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      // appBar: AppBar(
+      //   title: const Text('Saved'),
+      //   actions: const [
+      //     NotificationBadge(),
+      //   ],
+      // ),
       body: ListView.builder(
         padding: const EdgeInsets.all(16),
         itemCount: 5, // Placeholder count

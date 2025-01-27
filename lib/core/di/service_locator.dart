@@ -1,5 +1,6 @@
 import 'package:ai_resume_builder/features/resume/presentation/bloc/resume_creation/resume_creation_bloc.dart';
 import 'package:get_it/get_it.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import '../config/env_config.dart';
 import '../network/network_info.dart';
@@ -11,6 +12,7 @@ import '../../features/auth/presentation/bloc/signup/signup_bloc.dart';
 import '../../features/auth/presentation/bloc/forgot_password/forgot_password_bloc.dart';
 import '../../features/resume/domain/services/ai_resume_service.dart';
 import '../../features/resume/domain/services/ai_resume_service_impl.dart';
+import '../../features/dashboard/presentation/bloc/notification/notification_bloc.dart';
 
 final sl = GetIt.instance;
 
@@ -23,6 +25,7 @@ Future<void> setupServiceLocator() async {
   );
   sl.registerLazySingleton(() => Supabase.instance.client);
   sl.registerLazySingleton(() => const NetworkInfo());
+  sl.registerLazySingleton(() => SharedPreferences.getInstance());
 
   // Core
   // TODO: Add core dependencies like NetworkInfo, etc.
@@ -31,6 +34,7 @@ Future<void> setupServiceLocator() async {
   await _setupAuthFeature();
   await _setupResumeFeature();
   await _setupProfileFeature();
+  await _setupDashboardFeature();
 }
 
 /// Setup dependencies for Auth feature
@@ -90,4 +94,11 @@ Future<void> _setupProfileFeature() async {
 
   // Data Sources
   // TODO: Register profile-related data sources
+}
+
+/// Setup dependencies for Dashboard feature
+Future<void> _setupDashboardFeature() async {
+  // BLoCs
+  final prefs = await SharedPreferences.getInstance();
+  sl.registerFactory(() => NotificationBloc(prefs));
 }
