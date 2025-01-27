@@ -44,6 +44,7 @@ dependencies:
   google_sign_in: ^6.1.6
   sign_in_with_apple: ^5.0.0
   linkedin_login: ^2.3.1
+  flutter_native_splash: ^2.4.4
 
 dev_dependencies:
   flutter_test:
@@ -62,3 +63,31 @@ flutter:
     - assets/icons/
     - assets/fonts/
     - .env
+
+flutter_native_splash:
+  color: "#FFFFFF"
+  color_dark: "#1F2937"
+  image: assets/images/logo.png
+  image_dark: assets/images/logo_dark.png
+  
+  android_12:
+    color: "#FFFFFF"
+    color_dark: "#1F2937"
+    image: assets/images/logo.png
+    image_dark: assets/images/logo_dark.png
+    icon_background_color: "#FFFFFF"
+    icon_background_color_dark: "#1F2937"
+
+  web: true
+  android: true
+  ios: true
+  
+  fullscreen: true
+  
+  android_gravity: center
+  ios_content_mode: center
+  web_image_mode: center
+  
+  info_plist_files:
+    - 'ios/Runner/Info-Debug.plist'
+    - 'ios/Runner/Info-Release.plist'

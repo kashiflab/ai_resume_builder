@@ -1,3 +1,4 @@
+import 'package:ai_resume_builder/features/resume/presentation/bloc/resume_creation/resume_creation_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -47,6 +48,9 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider<ForgotPasswordBloc>(
           create: (context) => sl<ForgotPasswordBloc>(),
+        ),
+        BlocProvider<ResumeCreationBloc>(
+          create: (context) => sl<ResumeCreationBloc>(),
         ),
       ],
       child: MaterialApp.router(

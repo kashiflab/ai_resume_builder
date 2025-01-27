@@ -1,5 +1,4 @@
 enum AppRoute {
-  splash('/'),
   signIn('/signin'),
   signUp('/signup'),
   forgotPassword('/forgot-password'),
@@ -19,7 +18,10 @@ enum AppRoute {
   settingsLanguage('/settings/language'),
   settingsNotifications('/settings/notifications'),
   help('/help'),
-  about('/about');
+  about('/about'),
+  createResume('/create-resume'),
+  aiAnalyzeSection('/ai-analyze-section'),
+  quickActions('/quick-actions');
 
   final String path;
   const AppRoute(this.path);

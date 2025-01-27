@@ -1,3 +1,5 @@
+import 'package:ai_resume_builder/features/resume/domain/models/resume_model.dart';
+import 'package:ai_resume_builder/features/resume/presentation/widgets/ai_analysis_section.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -13,15 +15,19 @@ import '../../features/settings/presentation/pages/subscription_screen.dart';
 import '../../features/settings/presentation/pages/template_settings_screen.dart';
 import '../../features/settings/presentation/pages/font_settings_screen.dart';
 import '../../features/settings/presentation/pages/export_settings_screen.dart';
-import '../../features/splash/presentation/pages/splash_screen.dart';
+import '../../features/resume/presentation/pages/resume_creation_screen.dart';
+import '../../features/dashboard/presentation/pages/quick_actions/quick_actions_screen.dart';
 
 final goRouter = GoRouter(
-  initialLocation: AppRoute.splash.path,
+  initialLocation: '/',
   routes: [
-    // Splash Route
     GoRoute(
-      path: AppRoute.splash.path,
-      builder: (context, state) => const SplashScreen(),
+      path: '/',
+      redirect: (context, state) {
+        final session = Supabase.instance.client.auth.currentSession;
+        final isAuthenticated = session != null && !session.isExpired;
+        return isAuthenticated ? AppRoute.dashboard.path : AppRoute.signIn.path;
+      },
     ),
 
     // Auth Routes
@@ -42,6 +48,16 @@ final goRouter = GoRouter(
     GoRoute(
       path: AppRoute.dashboard.path,
       builder: (context, state) => const DashboardScreen(),
+    ),
+    GoRoute(
+      path: AppRoute.createResume.path,
+      builder: (context, state) => ResumeCreationScreen(
+        templateId: state.uri.queryParameters['templateId'] ?? '',
+      ),
+    ),
+    GoRoute(
+      path: AppRoute.quickActions.path,
+      builder: (context, state) => const QuickActionsScreen(),
     ),
 
     // Settings Routes (Protected)
@@ -73,18 +89,6 @@ final goRouter = GoRouter(
       path: AppRoute.settingsExport.path,
       builder: (context, state) => const ExportSettingsScreen(),
     ),
-    GoRoute(
-      path: AppRoute.settingsFonts.path,
-      builder: (context, state) => const FontSettingsScreen(),
-    ),
-    // GoRoute(
-    //   path: AppRoute.settingsLanguage.path,
-    //   builder: (context, state) => const LanguageSettingsScreen(),
-    // ),
-    // GoRoute(
-    //   path: AppRoute.settingsNotifications.path,
-    //   builder: (context, state) => const NotificationsSettingsScreen(),
-    // ),
   ],
   redirect: (context, state) {
     try {
@@ -92,16 +96,15 @@ final goRouter = GoRouter(
       final session = Supabase.instance.client.auth.currentSession;
       final isAuthenticated = session != null && !session.isExpired;
 
-      // Check if the user is on auth pages or splash screen
+      // Check if the user is on auth pages
       final isAuthPath = [
         AppRoute.signIn.path,
         AppRoute.signUp.path,
         AppRoute.forgotPassword.path,
       ].contains(state.matchedLocation);
-      final isOnSplashPage = state.matchedLocation == AppRoute.splash.path;
 
-      // If not authenticated and not on auth pages or splash, redirect to auth
-      if (!isAuthenticated && !isAuthPath && !isOnSplashPage) {
+      // If not authenticated and not on auth pages, redirect to auth
+      if (!isAuthenticated && !isAuthPath) {
         return AppRoute.signIn.path;
       }
 

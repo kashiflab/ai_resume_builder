@@ -1,3 +1,4 @@
+import 'package:ai_resume_builder/features/resume/presentation/bloc/resume_creation/resume_creation_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import '../config/env_config.dart';
@@ -8,6 +9,8 @@ import '../../features/auth/presentation/bloc/auth_bloc.dart';
 import '../../features/auth/presentation/bloc/login/login_bloc.dart';
 import '../../features/auth/presentation/bloc/signup/signup_bloc.dart';
 import '../../features/auth/presentation/bloc/forgot_password/forgot_password_bloc.dart';
+import '../../features/resume/domain/services/ai_resume_service.dart';
+import '../../features/resume/domain/services/ai_resume_service_impl.dart';
 
 final sl = GetIt.instance;
 
@@ -54,8 +57,15 @@ Future<void> _setupAuthFeature() async {
 
 /// Setup dependencies for Resume feature
 Future<void> _setupResumeFeature() async {
+  // Register AIResumeService
+  sl.registerLazySingleton<AIResumeService>(
+    () => AIResumeServiceImpl(),
+  );
+
   // BLoCs
-  // TODO: Register resume-related BLoCs
+  sl.registerFactory(() => ResumeCreationBloc(
+        aiResumeService: sl(),
+      ));
 
   // Use Cases
   // TODO: Register resume-related use cases

@@ -1,3 +1,5 @@
+import 'package:ai_resume_builder/core/theme/app_theme.dart';
+import 'package:ai_resume_builder/features/settings/presentation/pages/settings_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:iconsax/iconsax.dart';
@@ -27,11 +29,12 @@ class _DashboardScreenState extends State<DashboardScreen> {
     const TemplatesScreen(),
     const SizedBox(), // Placeholder for FAB
     const SavedScreen(),
-    const ProfileScreen(),
+    // const ProfileScreen(),
+    const SettingsScreen(),
   ];
 
   void _handleFabPressed() {
-    // TODO: Handle create new resume
+    context.push(AppRoute.quickActions.path);
   }
 
   @override
@@ -47,12 +50,40 @@ class _DashboardScreenState extends State<DashboardScreen> {
       child: GestureDetector(
         onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
         child: Scaffold(
-          drawer: DashboardDrawer(
-            name: context.read<AuthBloc>().state.user?.fullName ?? 'Guest',
-            email: context.read<AuthBloc>().state.user?.email,
-          ),
+          // drawer: DashboardDrawer(
+          //   name: context.read<AuthBloc>().state.user?.fullName ?? 'Guest',
+          //   email: context.read<AuthBloc>().state.user?.email,
+          // ),
           appBar: AppBar(
-            title: const Text('AI Resume Builder'),
+            title: Row(
+              children: [
+                CircleAvatar(
+                  backgroundColor: AppTheme.primaryColor.withOpacity(0.1),
+                  radius: 16,
+                  child: Text(
+                    context
+                            .read<AuthBloc>()
+                            .state
+                            .user
+                            ?.fullName?[0]
+                            .toUpperCase() ??
+                        'AI',
+                    style: TextStyle(
+                      color: AppTheme.primaryColor,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+                const SizedBox(width: 8),
+                Text(
+                  context.read<AuthBloc>().state.user?.fullName ?? 'Guest',
+                  style: const TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+              ],
+            ),
             actions: [
               IconButton(
                 icon: const Icon(Iconsax.notification),

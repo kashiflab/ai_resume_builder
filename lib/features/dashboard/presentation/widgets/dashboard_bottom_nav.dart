@@ -39,7 +39,7 @@ class DashboardBottomNav extends StatelessWidget {
               _buildNavItem(1, Iconsax.document, 'Templates'),
               const SizedBox(width: 40),
               _buildNavItem(3, Iconsax.save_2, 'Saved'),
-              _buildNavItem(4, Iconsax.profile_circle, 'Profile'),
+              _buildNavItem(4, Iconsax.setting, 'Settings'),
             ],
           ),
         ),
