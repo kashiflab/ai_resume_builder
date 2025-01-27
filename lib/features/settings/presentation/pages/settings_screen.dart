@@ -100,13 +100,13 @@ class SettingsScreen extends StatelessWidget {
             icon: Icons.backup_outlined,
             title: 'Backup & Sync',
             subtitle: 'Manage your data',
-            onTap: () => context.push(AppRoute.settingsBackup.path),
+            // onTap: () => context.push(AppRoute.settingsBackup.path),
           ),
           _SettingsTile(
             icon: Icons.language_outlined,
             title: 'Language',
             subtitle: 'Change app language',
-            onTap: () => context.push(AppRoute.settingsLanguage.path),
+            // onTap: () => context.push(AppRoute.settingsLanguage.path),
           ),
           _SettingsTile(
             icon: Icons.notifications_outlined,

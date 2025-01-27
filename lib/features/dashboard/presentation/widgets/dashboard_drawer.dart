@@ -55,7 +55,7 @@ class DashboardDrawer extends StatelessWidget {
             leading: const Icon(FeatherIcons.settings),
             title: const Text('Settings'),
             onTap: () {
-              context.push(AppRoute.settings.path);
+              // context.push(AppRoute.settings.path);
             },
           ),
           ListTile(

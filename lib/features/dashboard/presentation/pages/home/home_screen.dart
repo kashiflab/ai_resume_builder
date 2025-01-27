@@ -98,7 +98,7 @@ class HomeScreen extends StatelessWidget {
           icon: Iconsax.import,
           color: Colors.green,
           onTap: () {
-            // TODO: Handle import resume
+            context.push(AppRoute.importResume.path);
           },
         ),
         _buildActionCard(

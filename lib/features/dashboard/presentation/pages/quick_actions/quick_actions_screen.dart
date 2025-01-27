@@ -42,9 +42,7 @@ class QuickActionsScreen extends StatelessWidget {
                   title: 'Import Resume',
                   icon: Iconsax.import,
                   description: 'Import from PDF or LinkedIn',
-                  onTap: () {
-                    // TODO: Implement import
-                  },
+                  onTap: () => context.push(AppRoute.importResume.path),
                   color: const Color(0xFF43A047), // Success green
                 ),
                 _buildActionCard(

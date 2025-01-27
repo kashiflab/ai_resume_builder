@@ -8,6 +8,7 @@ import '../../features/auth/presentation/pages/sign_in_screen.dart';
 import '../../features/auth/presentation/pages/sign_up_screen.dart';
 import '../../features/auth/presentation/pages/forgot_password_screen.dart';
 import '../../features/dashboard/presentation/pages/dashboard_screen.dart';
+import '../../features/dashboard/presentation/pages/notifications/notifications_screen.dart';
 import '../../features/settings/presentation/pages/settings_screen.dart';
 import '../../features/settings/presentation/pages/profile_settings_screen.dart';
 import '../../features/settings/presentation/pages/change_password_screen.dart';
@@ -17,6 +18,7 @@ import '../../features/settings/presentation/pages/font_settings_screen.dart';
 import '../../features/settings/presentation/pages/export_settings_screen.dart';
 import '../../features/resume/presentation/pages/resume_creation_screen.dart';
 import '../../features/dashboard/presentation/pages/quick_actions/quick_actions_screen.dart';
+import '../../features/resume/presentation/pages/import/import_resume_screen.dart';
 
 final goRouter = GoRouter(
   initialLocation: '/',
@@ -56,15 +58,23 @@ final goRouter = GoRouter(
       ),
     ),
     GoRoute(
+      path: AppRoute.importResume.path,
+      builder: (context, state) => const ImportResumeScreen(),
+    ),
+    GoRoute(
       path: AppRoute.quickActions.path,
       builder: (context, state) => const QuickActionsScreen(),
     ),
+    GoRoute(
+      path: AppRoute.notifications.path,
+      builder: (context, state) => const NotificationsScreen(),
+    ),
 
     // Settings Routes (Protected)
-    GoRoute(
-      path: AppRoute.settings.path,
-      builder: (context, state) => const SettingsScreen(),
-    ),
+    // GoRoute(
+    //   path: AppRoute.settings.path,
+    //   builder: (context, state) => const SettingsScreen(),
+    // ),
     GoRoute(
       path: AppRoute.settingsProfile.path,
       builder: (context, state) => const ProfileSettingsScreen(),
