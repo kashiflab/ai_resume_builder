@@ -35,7 +35,7 @@ dependencies:
   logger: ^2.0.2+1
   intl: ^0.19.0
   url_launcher: ^6.2.2
-  path_provider: ^2.1.1
+  path_provider: ^2.1.2
   # Supabase
   supabase_flutter: ^2.0.2
   # Environment Configuration
@@ -45,6 +45,8 @@ dependencies:
   sign_in_with_apple: ^5.0.0
   linkedin_login: ^2.3.1
   flutter_native_splash: ^2.4.4
+  file_picker: ^6.1.1
+  syncfusion_flutter_pdf: ^24.2.8
 
 dev_dependencies:
   flutter_test:

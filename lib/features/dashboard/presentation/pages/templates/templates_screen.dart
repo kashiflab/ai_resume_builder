@@ -1,3 +1,4 @@
+import 'package:ai_resume_builder/features/dashboard/presentation/pages/templates/modern/modern_template1.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -53,6 +54,39 @@ class _TemplatesScreenState extends State<TemplatesScreen> {
 
   @override
   Widget build(BuildContext context) {
+    // return ModernResumeTemplate(
+    //   name: "John Doe",
+    //   profession: "Flutter Developer",
+    //   email: "johndoe@example.com",
+    //   phone: "123-456-7890",
+    //   address: "123 Main St, Springfield",
+    //   summary:
+    //       "A passionate Flutter developer with 3+ years of experience building mobile applications.",
+    //   skills: ["Flutter", "Dart", "Firebase", "Git", "REST APIs"],
+    //   experience: [
+    //     {
+    //       "title": "Flutter Developer",
+    //       "company": "TechCorp",
+    //       "date": "Jan 2020 - Present",
+    //       "description":
+    //           "Developed cross-platform mobile applications using Flutter and Dart."
+    //     },
+    //     {
+    //       "title": "Software Engineer Intern",
+    //       "company": "CodeBase Inc.",
+    //       "date": "Jun 2019 - Dec 2019",
+    //       "description":
+    //           "Contributed to backend APIs and collaborated on app development projects."
+    //     },
+    //   ],
+    //   education: [
+    //     {
+    //       "degree": "B.Sc. in Computer Science",
+    //       "institution": "Springfield University",
+    //       "year": "2019"
+    //     },
+    //   ],
+    // );
     return Scaffold(
       //   appBar: AppBar(
       //     title: const Text('Templates'),

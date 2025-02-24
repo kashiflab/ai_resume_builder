@@ -12,6 +12,7 @@ import '../../features/auth/presentation/bloc/signup/signup_bloc.dart';
 import '../../features/auth/presentation/bloc/forgot_password/forgot_password_bloc.dart';
 import '../../features/resume/domain/services/ai_resume_service.dart';
 import '../../features/resume/domain/services/ai_resume_service_impl.dart';
+import '../../features/resume/domain/services/pdf_extraction_service.dart';
 import '../../features/dashboard/presentation/bloc/notification/notification_bloc.dart';
 
 final sl = GetIt.instance;
@@ -61,9 +62,12 @@ Future<void> _setupAuthFeature() async {
 
 /// Setup dependencies for Resume feature
 Future<void> _setupResumeFeature() async {
-  // Register AIResumeService
+  // Services
   sl.registerLazySingleton<AIResumeService>(
     () => AIResumeServiceImpl(),
+  );
+  sl.registerLazySingleton(
+    () => PDFExtractionService(),
   );
 
   // BLoCs

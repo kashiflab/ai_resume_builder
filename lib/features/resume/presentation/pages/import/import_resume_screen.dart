@@ -1,7 +1,14 @@
+import 'dart:developer';
+import 'dart:io';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 import '../../../../../core/theme/app_theme.dart';
+import '../../../../../core/di/service_locator.dart';
 import '../../../../dashboard/presentation/widgets/notification_badge.dart';
+import '../../../domain/models/extracted_resume_data.dart';
+import '../../../domain/services/pdf_extraction_service.dart';
+import 'edit_extracted_resume_screen.dart';
 
 class ImportResumeScreen extends StatelessWidget {
   const ImportResumeScreen({super.key});
@@ -33,9 +40,7 @@ class ImportResumeScreen extends StatelessWidget {
               description: 'Import from an existing PDF resume',
               icon: Iconsax.document_upload,
               color: AppTheme.primaryColor,
-              onTap: () {
-                // TODO: Implement PDF import
-              },
+              onTap: () => _importPDF(context),
             ),
             const SizedBox(height: 16),
             _buildImportCard(
@@ -72,6 +77,95 @@ class ImportResumeScreen extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  Future<void> _importPDF(BuildContext context) async {
+    // Show loading indicator
+    final loadingOverlay = _showLoadingOverlay(context);
+    try {
+      // Pick PDF file
+      final result = await FilePicker.platform.pickFiles(
+        type: FileType.custom,
+        allowedExtensions: ['pdf'],
+      );
+
+      if (result != null) {
+        final file = File(result.files.single.path!);
+
+        // Extract data from PDF using the service from DI
+        final extractionService = sl<PDFExtractionService>();
+        final extractedData = await extractionService.extractFromPDF(file);
+
+        // Hide loading indicator
+        loadingOverlay.remove();
+
+        // Navigate to edit screen
+        if (context.mounted) {
+          log('Extracted data: ${extractedData.toJson()}');
+          // final editedData = await Navigator.push<ExtractedResumeData>(
+          //   context,
+          //   MaterialPageRoute(
+          //     builder: (context) => EditExtractedResumeScreen(
+          //       resumeData: extractedData,
+          //     ),
+          //   ),
+          // );
+
+          // if (editedData != null) {
+          //   // Show success message
+          //   if (context.mounted) {
+          //     ScaffoldMessenger.of(context).showSnackBar(
+          //       const SnackBar(
+          //         content: Text('Resume data extracted successfully!'),
+          //         backgroundColor: Colors.green,
+          //       ),
+          //     );
+          //   }
+          //   // TODO: Create resume from edited data
+          // }
+        }
+      } else {
+        loadingOverlay.remove();
+      }
+    } catch (e) {
+      loadingOverlay.remove();
+      // Show error message
+      log('Error importing PDF: ${e.toString()}');
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Error importing PDF: ${e.toString()}'),
+            backgroundColor: Colors.red,
+          ),
+        );
+      }
+    }
+  }
+
+  OverlayEntry _showLoadingOverlay(BuildContext context) {
+    final overlay = OverlayEntry(
+      builder: (context) => Container(
+        color: Colors.black54,
+        child: const Center(
+          child: Card(
+            child: Padding(
+              padding: EdgeInsets.all(16),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  CircularProgressIndicator(),
+                  SizedBox(height: 16),
+                  Text('Extracting data from PDF...'),
+                ],
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+
+    Overlay.of(context).insert(overlay);
+    return overlay;
   }
 
   Widget _buildImportCard(
