@@ -1,10 +1,8 @@
-import 'package:ai_resume_builder/features/resume/domain/models/resume_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../core/widgets/custom_button.dart';
 import '../bloc/resume_creation/resume_creation_bloc.dart';
 import '../widgets/resume_form_sections/index.dart';
-import '../widgets/ai_analysis_section.dart';
 
 class ResumeCreationScreen extends StatefulWidget {
   final String templateId;

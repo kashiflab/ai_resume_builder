@@ -19,17 +19,14 @@ import '../../features/settings/presentation/pages/export_settings_screen.dart';
 import '../../features/resume/presentation/pages/resume_creation_screen.dart';
 import '../../features/dashboard/presentation/pages/quick_actions/quick_actions_screen.dart';
 import '../../features/resume/presentation/pages/import/import_resume_screen.dart';
+import '../../features/splash/presentation/pages/splash_screen.dart';
 
 final goRouter = GoRouter(
-  initialLocation: '/',
+  initialLocation: AppRoute.splash.path,
   routes: [
     GoRoute(
-      path: '/',
-      redirect: (context, state) {
-        final session = Supabase.instance.client.auth.currentSession;
-        final isAuthenticated = session != null && !session.isExpired;
-        return isAuthenticated ? AppRoute.dashboard.path : AppRoute.signIn.path;
-      },
+      path: AppRoute.splash.path,
+      builder: (context, state) => const SplashScreen(),
     ),
 
     // Auth Routes

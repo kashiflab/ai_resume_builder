@@ -1,4 +1,7 @@
 enum AppRoute {
+  // Splash
+  splash('/'),
+
   // Auth
   signIn('/auth/sign-in'),
   signUp('/auth/sign-up'),
