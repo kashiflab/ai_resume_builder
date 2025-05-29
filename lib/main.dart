@@ -1,17 +1,14 @@
-import 'package:ai_resume_builder/features/resume/presentation/bloc/resume_creation/resume_creation_bloc.dart';
+import 'package:ai_resume_builder/presenter/delegates/gorouter_delegates.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'core/config/env_config.dart';
-import 'core/di/service_locator.dart';
-import 'core/router/app_router.dart';
+import 'infrastructure/di/service_locator.dart';
 import 'core/theme/app_theme.dart';
 import 'features/auth/presentation/bloc/auth_bloc.dart';
 import 'features/auth/presentation/bloc/login/login_bloc.dart';
 import 'features/auth/presentation/bloc/signup/signup_bloc.dart';
 import 'features/auth/presentation/bloc/forgot_password/forgot_password_bloc.dart';
-import 'features/dashboard/presentation/bloc/notification/notification_bloc.dart';
-import 'features/dashboard/presentation/bloc/notification/notification_event.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -51,13 +48,6 @@ class MyApp extends StatelessWidget {
         BlocProvider<ForgotPasswordBloc>(
           create: (context) => sl<ForgotPasswordBloc>(),
         ),
-        BlocProvider<ResumeCreationBloc>(
-          create: (context) => sl<ResumeCreationBloc>(),
-        ),
-        BlocProvider<NotificationBloc>(
-          create: (context) =>
-              sl<NotificationBloc>()..add(LoadNotificationsEvent()),
-        ),
       ],
       child: MaterialApp.router(
         title: 'AI Resume Builder',
@@ -66,7 +56,7 @@ class MyApp extends StatelessWidget {
         darkTheme: AppTheme.darkTheme,
         // themeMode: ThemeMode.system,
         themeMode: ThemeMode.light,
-        routerConfig: goRouter,
+        routerConfig: GoRouterDelegate().goRouter,
         builder: (context, child) {
           // Update system UI overlay style based on theme
           // final isDark = Theme.of(context).brightness == Brightness.dark;

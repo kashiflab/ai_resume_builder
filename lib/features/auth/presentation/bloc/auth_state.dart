@@ -1,7 +1,7 @@
 part of 'auth_bloc.dart';
 
 class AuthState extends Equatable {
-  final UserModel? user;
+  final UserEntity? user;
   final bool isAuthenticated;
   final bool isLoading;
   final String? errorMessage;
@@ -18,7 +18,7 @@ class AuthState extends Equatable {
   });
 
   AuthState copyWith({
-    UserModel? user,
+    UserEntity? user,
     bool? isAuthenticated,
     bool? isLoading,
     String? errorMessage,

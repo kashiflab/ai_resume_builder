@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import '../../features/dashboard/presentation/widgets/notification_badge.dart';
+import '../../presenter/dashboard/widgets/notification_badge.dart';
 
 class AppTheme {
   // Private constructor to prevent instantiation

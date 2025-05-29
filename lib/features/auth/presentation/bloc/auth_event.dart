@@ -56,7 +56,7 @@ class SignOutEvent extends AuthEvent {
 }
 
 class UpdateProfileEvent extends AuthEvent {
-  final UserModel user;
+  final UserEntity user;
 
   const UpdateProfileEvent({required this.user});
 
